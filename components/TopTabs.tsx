@@ -4,25 +4,9 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 export default function TopTabs(): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={[styles.tab, styles.activeTab]}>
-        <View style={styles.icon}>
-          <Text style={styles.iconText}>💼</Text>
-        </View>
-        <Text style={styles.activeTabText}>Net Worth</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.tab}>
-        <View style={styles.icon}>
-          <Text style={styles.iconText}>📈</Text>
-        </View>
-        <Text style={styles.tabText}>Income</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.tab}>
-        <View style={styles.icon}>
-          <Text style={styles.iconText}>🏦</Text>
-        </View>
-        <Text style={styles.tabText}>Savings</Text>
+      <TouchableOpacity style={styles.backButton}>
+        <Text style={styles.backIcon}>←</Text>
+        <Text style={styles.backText}>Back</Text>
       </TouchableOpacity>
     </View>
   );
@@ -31,36 +15,24 @@ export default function TopTabs(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
     marginTop: 20,
     marginBottom: 20,
   },
-  tab: {
-    flex: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    marginHorizontal: 5,
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
+  backButton: {
+    flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
-  activeTab: {
-    backgroundColor: '#00D4FF',
+  backIcon: {
+    fontSize: 24,
+    color: '#333333',
+    marginRight: 8,
   },
-  icon: {
-    marginBottom: 5,
-  },
-  iconText: {
-    fontSize: 20,
-  },
-  tabText: {
-    fontSize: 12,
-    color: '#666666',
+  backText: {
+    fontSize: 16,
+    color: '#333333',
     fontWeight: '500',
-  },
-  activeTabText: {
-    fontSize: 12,
-    color: '#FFFFFF',
-    fontWeight: '600',
   },
 });

@@ -5,13 +5,13 @@ export default function BottomNavigation(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.navItem}>
-        <Text style={styles.activeIcon}>🏠</Text>
-        <Text style={styles.activeLabel}>Home</Text>
+        <Text style={styles.activeIcon}>💼</Text>
+        <Text style={styles.activeLabel}>Net Worth</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.navItem}>
-        <Text style={styles.icon}>📊</Text>
-        <Text style={styles.label}>Stats</Text>
+        <Text style={styles.icon}>📈</Text>
+        <Text style={styles.label}>Income</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.navItem}>
