@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, View, SafeAreaView, StatusBar, ScrollView } from 'react-native';
 import TopTabs from './components/TopTabs';
 import NetWorthCard from './components/NetWorthCard';
 import CompareToggle from './components/CompareToggle';
@@ -10,12 +10,12 @@ export default function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.content}>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <TopTabs />
         <NetWorthCard />
         <CompareToggle />
         <DistributionCard />
-      </View>
+      </ScrollView>
       <BottomNavigation />
     </SafeAreaView>
   );
