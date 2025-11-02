@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-export default function DistributionCard() {
+export default function DistributionCard(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Distribution Analysis</Text>

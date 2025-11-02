@@ -6,7 +6,7 @@ import CompareToggle from './components/CompareToggle';
 import DistributionCard from './components/DistributionCard';
 import BottomNavigation from './components/BottomNavigation';
 
-export default function App() {
+export default function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />

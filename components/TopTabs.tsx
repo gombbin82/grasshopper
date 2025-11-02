@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-export default function TopTabs() {
+export default function TopTabs(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={[styles.tab, styles.activeTab]}>

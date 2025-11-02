@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export default function NetWorthCard() {
+export default function NetWorthCard(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <View style={styles.iconCircle}>

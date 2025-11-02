@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-export default function CompareToggle() {
+export default function CompareToggle(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Compare Against</Text>
