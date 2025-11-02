@@ -1,23 +1,53 @@
-import React from 'react';
-import { StyleSheet, View, SafeAreaView, StatusBar, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
+import { ProfileProvider } from './contexts/ProfileContext';
 import TopTabs from './components/TopTabs';
-import NetWorthCard from './components/NetWorthCard';
-import CompareToggle from './components/CompareToggle';
-import DistributionCard from './components/DistributionCard';
 import BottomNavigation from './components/BottomNavigation';
+import HomeScreen from './screens/HomeScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
-export default function App(): React.JSX.Element {
+type Screen = 'networth' | 'income' | 'profile' | 'settings';
+
+function AppContent(): React.JSX.Element {
+  const [currentScreen, setCurrentScreen] = useState<Screen>('networth');
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'networth':
+        return <HomeScreen />;
+      case 'income':
+        return <HomeScreen />;
+      case 'profile':
+        return <ProfileScreen />;
+      case 'settings':
+        return <HomeScreen />;
+      default:
+        return <HomeScreen />;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
         <TopTabs />
-        <NetWorthCard />
-        <CompareToggle />
-        <DistributionCard />
-      </ScrollView>
-      <BottomNavigation />
+      </View>
+      <View style={styles.content}>
+        {renderScreen()}
+      </View>
+      <BottomNavigation
+        currentScreen={currentScreen}
+        onScreenChange={setCurrentScreen}
+      />
     </SafeAreaView>
+  );
+}
+
+export default function App(): React.JSX.Element {
+  return (
+    <ProfileProvider>
+      <AppContent />
+    </ProfileProvider>
   );
 }
 
@@ -26,8 +56,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F5F5',
   },
+  header: {
+    paddingHorizontal: 20,
+  },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
   },
 });
