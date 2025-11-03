@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
-import { ProfileProvider } from './contexts/ProfileContext';
+import { AppProviders } from './providers/AppProviders';
 import TopTabs from './components/TopTabs';
 import BottomNavigation from './components/BottomNavigation';
 import HomeScreen from './screens/HomeScreen';
@@ -45,9 +45,9 @@ function AppContent(): React.JSX.Element {
 
 export default function App(): React.JSX.Element {
   return (
-    <ProfileProvider>
+    <AppProviders>
       <AppContent />
-    </ProfileProvider>
+    </AppProviders>
   );
 }
 
