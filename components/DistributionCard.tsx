@@ -1,19 +1,23 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { netWorthData } from '../data/sampleData';
+import { generateSkewedBellCurve } from '../src/functions/distributionUtils';
 
 export default function DistributionCard(): React.JSX.Element {
+  const userPercentile = ((netWorthData.totalUsers - netWorthData.userRank) / netWorthData.totalUsers * 100).toFixed(1);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Distribution Analysis</Text>
       <Text style={styles.subtitle}>
-        You're in the top <Text style={styles.percentage}>21.5%</Text>
+        You're in the top <Text style={styles.percentage}>{userPercentile}%</Text>
       </Text>
 
       <View style={styles.chartContainer}>
         <Svg height="150" width="100%" viewBox="0 0 300 150">
           <Path
-            d="M 20 140 Q 40 120, 60 90 T 100 50 T 150 30 T 200 50 T 240 90 T 280 140"
+            d={generateSkewedBellCurve()}
             stroke="#00D4FF"
             strokeWidth="3"
             fill="rgba(0, 212, 255, 0.15)"
