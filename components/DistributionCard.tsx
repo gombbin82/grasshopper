@@ -4,7 +4,11 @@ import Svg, { Path } from 'react-native-svg';
 import { netWorthData } from '../data/sampleData';
 import { generateSkewedBellCurve } from '../src/functions/distributionUtils';
 
-export default function DistributionCard(): React.JSX.Element {
+interface DistributionCardProps {
+  comparisonType?: 'median' | 'average';
+}
+
+export default function DistributionCard({ comparisonType = 'median' }: DistributionCardProps): React.JSX.Element {
   const userPercentile = ((netWorthData.totalUsers - netWorthData.userRank) / netWorthData.totalUsers * 100).toFixed(1);
 
   return (
@@ -17,7 +21,7 @@ export default function DistributionCard(): React.JSX.Element {
       <View style={styles.chartContainer}>
         <Svg height="150" width="100%" viewBox="0 0 300 150">
           <Path
-            d={generateSkewedBellCurve()}
+            d={generateSkewedBellCurve(comparisonType)}
             stroke="#00D4FF"
             strokeWidth="3"
             fill="rgba(0, 212, 255, 0.15)"

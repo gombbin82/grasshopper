@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-export default function CompareToggle(): React.JSX.Element {
+interface CompareToggleProps {
+  onSelectionChange?: (selection: 'median' | 'average') => void;
+}
+
+export default function CompareToggle({ onSelectionChange }: CompareToggleProps): React.JSX.Element {
+  const [selected, setSelected] = useState<'median' | 'average'>('median');
+
+  const handleSelection = (option: 'median' | 'average') => {
+    setSelected(option);
+    onSelectionChange?.(option);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Compare Against</Text>
 
       <View style={styles.toggleContainer}>
-        <TouchableOpacity style={[styles.option, styles.activeOption]}>
-          <Text style={styles.activeOptionText}>Median</Text>
+        <TouchableOpacity 
+          style={[styles.option, selected === 'median' && styles.activeOption]}
+          onPress={() => handleSelection('median')}
+        >
+          <Text style={selected === 'median' ? styles.activeOptionText : styles.optionText}>
+            Median
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>Average</Text>
+        <TouchableOpacity 
+          style={[styles.option, selected === 'average' && styles.activeOption]}
+          onPress={() => handleSelection('average')}
+        >
+          <Text style={selected === 'average' ? styles.activeOptionText : styles.optionText}>
+            Average
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
