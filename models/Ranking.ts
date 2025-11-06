@@ -1,38 +1,40 @@
-export interface RankingResult {
-  rank: number;
-  totalPopulation: number;
-  percentile: number;
+import {UserProfile} from "./UserProfile";
+import {Percentiles} from "../data/DataFile";
+
+export interface RankResult {
+  all: Rank,
+  others: Rank[]
 }
 
-export interface NetWorthRanking extends RankingResult {
-  netWorth: number;
+export enum Category {
+  INCOME,
+  NET_WORTH
 }
 
-export interface IncomeRanking extends RankingResult {
-  income: number;
+export enum Group {
+  ALL = 'ALL',
+  COUNTRY = 'COUNTRY'
 }
 
-export interface AgeGroupRanking extends RankingResult {
-  age: number;
-  ageGroup: string;
+export interface Type {
+  category: Category,
+  group: Group
 }
 
-export interface StateRanking extends RankingResult {
-  state: string;
-  statePopulation: number;
+export interface Rank {
+  type: Type
+  metadata: {
+    country?: string
+  }
+  data: {
+    percentiles: Percentiles
+    population: number
+    rank?: number
+    rankPercentile?: number
+  }
 }
 
-export interface OverallRanking {
-  netWorth?: NetWorthRanking;
-  income?: IncomeRanking;
-  ageGroup?: AgeGroupRanking;
-  state?: StateRanking;
+export interface RankRequest {
+  type: Type,
+  userProfile: UserProfile
 }
-
-export interface DistributionData {
-  percentile: number;
-  comparisonType: 'median' | 'average';
-  chartData: number[];
-}
-
-// Always

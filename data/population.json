@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-11-03",
+    "description": "Population per country"
+  },
+  "populations": [{
+    "group": "ALL",
+    "population": 8000000000
+  },{
+    "group": "US",
+    "population": 300000000
+  }]
+}

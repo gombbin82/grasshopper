@@ -1,13 +1,14 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { OverallRanking, DistributionData } from '../models/Ranking';
-import { RankingService } from '../services/RankingService';
-import { useProfile } from './ProfileContext';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import {Category, Group, RankRequest, RankResult} from '../models/Ranking';
+import {RankingService} from '../services/RankingService';
+import {useProfile} from './ProfileContext';
+import {Percentiles} from "../data/DataFile";
 
 interface RankingContextType {
-  ranking: OverallRanking;
-  distributionData: DistributionData | null;
-  comparisonType: 'median' | 'average';
-  setComparisonType: (type: 'median' | 'average') => void;
+  rank: RankResult | undefined;
+  distributionData: Percentiles | null;
+  category: Category;
+  setCategory: (category: Category) => void;
   refreshRanking: () => void;
 }
 
@@ -17,42 +18,44 @@ interface RankingProviderProps {
   children: ReactNode;
 }
 
-export function RankingProvider({ children }: RankingProviderProps): React.JSX.Element {
-  const { profile } = useProfile();
-  const [ranking, setRanking] = useState<OverallRanking>({});
-  const [comparisonType, setComparisonType] = useState<'median' | 'average'>('median');
-  const [distributionData, setDistributionData] = useState<DistributionData | null>(null);
+export function RankingProvider({children}: RankingProviderProps): React.JSX.Element {
+  const {profile} = useProfile();
+  const [rank, setRank] = useState<RankResult>();
+  const [category, setCategory] = useState<Category>(Category.NET_WORTH);
+  const [distributionData, setDistributionData] = useState<Percentiles | null>(null);
 
   useEffect(() => {
     refreshRanking();
-  }, [profile, comparisonType]);
+  }, [profile, category]);
 
   const refreshRanking = () => {
-    // Calculate overall ranking based on profile
-    const newRanking = RankingService.calculateOverallRanking(profile);
-    setRanking(newRanking);
+    // Create rank request with current rankType
+    const rankRequest: RankRequest = {
+      type: {
+        group: Group.ALL,
+        category: category
+      },
+      userProfile: profile,
+    };
 
-    // Get distribution data if we have net worth
-    if (profile.netWorth !== undefined) {
-      const distribution = RankingService.getDistributionData(profile, comparisonType);
-      setDistributionData(distribution);
-    } else {
-      setDistributionData(null);
-    }
+    // Calculate ranking based on rank request
+    const rankResult = RankingService.calculateRanks(rankRequest);
+    setRank(rankResult);
+    setDistributionData(rankResult.all.data.percentiles);
   };
 
   return (
-    <RankingContext.Provider
-      value={{
-        ranking,
-        distributionData,
-        comparisonType,
-        setComparisonType,
-        refreshRanking,
-      }}
-    >
-      {children}
-    </RankingContext.Provider>
+      <RankingContext.Provider
+          value={{
+            rank: rank,
+            distributionData,
+            category,
+            setCategory,
+            refreshRanking,
+          }}
+      >
+        {children}
+      </RankingContext.Provider>
   );
 }
 

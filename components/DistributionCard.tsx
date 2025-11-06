@@ -1,22 +1,32 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { netWorthData } from '../data/sampleData';
 import { generateSkewedBellCurve } from '../src/functions/distributionUtils';
+import { useRanking } from '../contexts/RankingContext';
 
 interface DistributionCardProps {
   comparisonType?: 'median' | 'average';
 }
 
 export default function DistributionCard({ comparisonType = 'median' }: DistributionCardProps): React.JSX.Element {
-  const userPercentile = ((netWorthData.totalUsers - netWorthData.userRank) / netWorthData.totalUsers * 100).toFixed(1);
+  const { rank } = useRanking();
+
+  // Calculate user percentile from rank data
+  const userPercentile = rank?.all.data.rankPercentile?.toFixed(1);
+  const hasData = rank && userPercentile !== undefined;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Distribution Analysis</Text>
-      <Text style={styles.subtitle}>
-        You're in the top <Text style={styles.percentage}>{userPercentile}%</Text>
-      </Text>
+      {hasData ? (
+        <Text style={styles.subtitle}>
+          You're in the top <Text style={styles.percentage}>{100 - parseFloat(userPercentile)}%</Text>
+        </Text>
+      ) : (
+        <Text style={styles.subtitle}>
+          Enter your information in the Profile tab to see your ranking
+        </Text>
+      )}
 
       <View style={styles.chartContainer}>
         <Svg height="150" width="100%" viewBox="0 0 300 150">
